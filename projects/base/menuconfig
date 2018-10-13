@@ -1,0 +1,27 @@
+#!/bin/bash
+
+CONF_FILE=$(pwd)/$1
+
+if [ $2 == "no_menu" ]; then
+  export MENUCONFIG_MODE="no_menu"
+fi
+
+echo $CONF_FILE
+
+export LXDIALOG_BIN=../../cfgtool/lxdialog/lxdialog
+
+if [ ! -d include ]; then
+  mkdir -p include
+fi
+
+
+if [ ! -d ../../cfgtool/mconf ]; then
+  pushd ../../cfgtool
+   make
+  popd
+fi
+
+if [ ! -d ../../cfgtool/mconf ]; then
+  ../../cfgtool/mconf $CONF_FILE
+fi
+

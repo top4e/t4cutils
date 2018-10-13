@@ -1,0 +1,31 @@
+
+include $(PROJECT_ROOT)/.config
+
+export INSTALL_LIB_DIR = $(PROJECT_ROOT)/out/lib
+export INSTALL_BIN_DIR = $(PROJECT_ROOT)/out/bin
+export INSTALL_DATA_DIR = $(PROJECT_ROOT)/out/data
+export INSTALL_PLUGIN_DIR = $(PROJECT_ROOT)/out/plugins
+
+DIRS = $(INSTALL_BIN_DIR) $(INSTALL_LIB_DIR) $(INSTALL_DATA_DIR) $(INSTALL_PLUGIN_DIR)
+
+SRC_MODULES-y =
+
+SRC_MODULES-$(CONFIG_LIBUTILS) += utils
+
+SRC_MODULES = $(SRC_MODULES-y)
+
+all: $(SRC_MODULES)
+
+$(SRC_MODULES): $(DIRS)
+	@make -j8 --no-print-directory -C ../../modules/$@ install
+
+$(DIRS):
+	mkdir -p $@
+
+clean:
+	@$(foreach dir,$(SRC_MODULES),make --no-print-directory -C ../../modules/$(dir) clean;)
+	@rm -rf $(PROJECT_ROOT)/out/bin
+	@rm -rf $(PROJECT_ROOT)/out/lib
+	@rm -rf $(PROJECT_ROOT)/out/plugins
+
+include .kconfig.d

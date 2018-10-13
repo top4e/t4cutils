@@ -1,0 +1,15 @@
+#
+# Automatically generated make config: don't edit
+# version: 
+# Sat Oct 13 22:14:42 2018
+#
+CONFIG_TARGET_NATIVE=y
+
+#
+# VEngine framework
+#
+CONFIG_LIBUTILS=y
+
+#
+# TODO: Application part here
+#
